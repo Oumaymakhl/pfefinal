@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  pool: 5
+  username: postgres # OU votre nom d'utilisateur
+  password: ouma123
+
+development:
+  <<: *default
+  database: pfe_development
+
+test:
+  <<: *default
+  database: pfe_test
+
+production:
+  <<: *default
+  database: pfe_production
+  
