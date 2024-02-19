@@ -1,9 +1,6 @@
 require_relative "boot"
-
 require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module Pfe
@@ -24,4 +21,18 @@ module Pfe
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
   end
+end
+
+# Configuration de l'envoi d'e-mails via SMTP
+Pfe::Application.configure do
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com', # Adresse SMTP de Gmail
+    port: 587, # Port SMTP de Gmail
+    domain: 'gmail.com', # Domaine utilisé dans l'envoi des e-mails via Gmail
+    user_name: 'oumaymakahouli20@gmail.com', # Votre adresse e-mail Gmail
+    password: 'thgh ffsc ptkw aobt', # Votre mot de passe Gmail
+    authentication: :plain, # Méthode d'authentification
+    enable_starttls_auto: true # Activation de STARTTLS pour le chiffrement
+  }
 end
