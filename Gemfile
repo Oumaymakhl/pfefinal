@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.0"
 gem"bcrypt"
 gem"rack-cors",:require=>"rack/cors"
+gem 'mail'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3"
 

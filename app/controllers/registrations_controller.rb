@@ -1,19 +1,31 @@
+require_relative '../services/email_service'
 class RegistrationsController < ApplicationController
     def create
-      user = User.create!(
+      role = params[:role]
+      user = User.new(
         email: params[:email],
-        password: params[:password],
-        password_confirmation: params[:password_confirmation]
+        password: generate_random_password,
+        password_confirmation: params[:password_confirmation],
+        role: role
       )
-      if user
+  
+      if user.save
+        send_confirmation_email(user)
         session[:user_id] = user.id
-        render json: {
-          status: :created,
-          user: user
-        }
+        render json: { status: :created, user: user }
       else
-        render json: { status: 500 }
+        render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
+    end
+  
+    private
+  
+    def generate_random_password
+      SecureRandom.hex(8)
+    end
+  
+    def send_confirmation_email(user)
+      EmailService.send_email(user.email, "Confirmation de compte", "Voici vos informations de connexion : Email: #{user.email}, Mot de passe: #{user.password}")
     end
   end
   
